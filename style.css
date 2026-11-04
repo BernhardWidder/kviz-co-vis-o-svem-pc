@@ -1,6 +1,6 @@
 /*style pro odpovedi */
 #odpovedi {
- display: grid;
+    display: grid;
     gap: 10px;
     margin: 20px;
 }
@@ -10,6 +10,12 @@
     border: solid;
     text-align: left;
 }
-.odpoved: disabled {opacity: 1; }
-.odpoved.spravne    { background: #3aa341; border-color: #0db41d; }
-.odpoved.spatne {background: #b4292c; border-color: #b40003; }
+.odpoved.vybrana { background: #7590f1; border-color: #001fb4; }
+
+/* vypis chyb na konci */
+#chyby p {
+    text-align: left;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+}
