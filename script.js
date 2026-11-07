@@ -1,3 +1,4 @@
+// ===== Seznam otazek =====
 let otazky = [
     {
         otazka: "K čemu slouží procesor (CPU)?",
@@ -49,25 +50,32 @@ let otazky = [
     }
 ];
 
-let index = 0;
-let body = 0;
-let chyby = [];
-let vybrana = -1;
+// ===== Promenne pro prubeh hry =====
+let index = 0;      // cislo aktualni otazky
+let body = 0;       // pocet spravnych odpovedi
+let chyby = [];     // seznam spatne zodpovezenych otazek pro vyhodnoceni na konci
+let vybrana = -1;   // kterou odpoved hrac oznacil -1 = zatim zadnou
 
-const startDiv = document.getElementById("start");
-const kvizDiv = document.getElementById("kviz");
-const vysledekDiv = document.getElementById("vysledek");
-const pocitadlo = document.getElementById("pocitadlo");
-const otazkaEl = document.getElementById("otazka");
-const odpovediEl = document.getElementById("odpovedi");
-const btnDalsi = document.getElementById("btn-dalsi");
-const skoreEl = document.getElementById("skore");
-const chybyEl = document.getElementById("chyby");
+// ===== Odkazy na prvky v HTML =====
+const startDiv = document.getElementById("start");          // uvodni obrazovka
+const kvizDiv = document.getElementById("kviz");            // obrazovka s otazkami
+const vysledekDiv = document.getElementById("vysledek");    // obrazovka s vyhodnocenim
+const pocitadlo = document.getElementById("pocitadlo");     // text Otazka X / Y
+const otazkaEl = document.getElementById("otazka");         // nadpis s otazkou
+const odpovediEl = document.getElementById("odpovedi");     // misto pro tlacitka s odpovedmi
+const btnDalsi = document.getElementById("btn-dalsi");      // tlacitko Dalsi
+const skoreEl = document.getElementById("skore");           // text se skore
+const chybyEl = document.getElementById("chyby");           // misto pro vypis chyb
 
+// ===== Tlacitka =====
+// Zacit test a Zkusit znovu spusti hru od zacatku
 document.getElementById("btn-start").addEventListener("click", start);
 document.getElementById("btn-znovu").addEventListener("click", start);
+// Dalsi vyhodnoti odpoved a prejde na dalsi otazku
 btnDalsi.addEventListener("click", dalsi);
 
+// ===== start =====
+// vynuluje hru / schova start a vysledek / ukaze kviz a prvni otazku
 function start() {
     index = 0;
     body = 0;
@@ -78,17 +86,21 @@ function start() {
     zobrazOtazku();
 }
 
+// ===== zobrazOtazku =====
+// vypise aktualni otazku a pro kazdou odpoved vytvori tlacitko
 function zobrazOtazku() {
     let o = otazky[index];
     pocitadlo.textContent = "Otázka " + (index + 1) + " / " + otazky.length;
     otazkaEl.textContent = o.otazka;
-    odpovediEl.innerHTML = "";
-    btnDalsi.classList.add("skryte");
+    odpovediEl.innerHTML = "";              // smaze tlacitka z minule otazky
+    btnDalsi.classList.add("skryte");       // Dalsi se ukaze az po vyberu odpovedi
+    vybrana = -1;
 
     for (let i = 0; i < o.odpovedi.length; i++) {
         let tlacitko = document.createElement("button");
         tlacitko.textContent = o.odpovedi[i];
         tlacitko.className = "odpoved";
+        // po kliknuti se zavola vyhodnot s cislem teto odpovedi
         tlacitko.addEventListener("click", function () {
             vyhodnot(i);
         });
@@ -96,17 +108,23 @@ function zobrazOtazku() {
     }
 }
 
-function vyhodnot(i) {
+// ===== vyhodnot =====
+// zapamatuje si vybranou odpoved potom oznaci ji barvou potom ukaze tlacitko Dalsi
+    function vyhodnot(i) {
     vybrana = i;
     let tlacitka = odpovediEl.querySelectorAll(".odpoved");
-// AI Used, Model: Claude Opus 5.5
+    // nejdriv odznaci vsechny odpovedi
     for (let j = 0; j < tlacitka.length; j++) {
         tlacitka[j].classList.remove("vybrana");
     }
+    // pak oznaci tu kliknutou
     tlacitka[i].classList.add("vybrana");
     btnDalsi.classList.remove("skryte");
 }
 
+// ===== dalsi =====
+// zkontroluje odpoved: spravne = bod / spatne = ulozi se do chyb
+// pak ukaze dalsi otazku nebo vyhodnoceni kdyz uz zadna neni
 function dalsi() {
     let o = otazky[index];
     if (vybrana === o.spravna) {
@@ -123,12 +141,17 @@ function dalsi() {
     }
 }
 
+// ===== konec =====
+// vyhodnoceni na konci
+// ukaze skore a u kazde chyby vypise otazku / tvoji odpoved / spravnou odpoved / proc
 function konec() {
     kvizDiv.classList.add("skryte");
+    // AI Used, Model: Claude Opus 5.5
     vysledekDiv.classList.remove("skryte");
     skoreEl.textContent = "Máš " + body + " z " + otazky.length + " bodů!";
     chybyEl.innerHTML = "";
 
+    // pro kazdou chybu vytvori jeden odstavec
     for (let i = 0; i < chyby.length; i++) {
         let ch = chyby[i];
         let p = document.createElement("p");
@@ -137,5 +160,10 @@ function konec() {
             "Správně: " + ch.otazka.odpovedi[ch.otazka.spravna] + "<br>" +
             "Proč: " + ch.otazka.vysvetleni;
         chybyEl.appendChild(p);
+    }
+
+    // kdyz hrac nema zadnou chybu
+    if (chyby.length === 0) {
+        chybyEl.innerHTML = "<p>Všechno správně! </p>";
     }
 }

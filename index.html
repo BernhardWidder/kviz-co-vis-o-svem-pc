@@ -4,48 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kvíz - Co všechno víš o svém PC?</title>
-    <!--style pro hlavni page-->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .okno {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: #d6d6d6;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #000000;
-        }
-
-        .skryte {
-            display: none;
-        }
-
-        button {
-            background-color: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 12px 25px;
-            margin: 5px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #6666dc;
-        }
-    </style>
+    <!-- vsechny styly jsou v style.css -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -61,7 +20,7 @@
 
     <!-- otazky -->
     <div id="kviz" class="skryte">
-        <p id="pocitadlo">Otázka 1 / 10</p>
+        <p id="pocitadlo"></p>
         <h2 id="otazka"></h2>
         <div id="odpovedi"></div>
         <button id="btn-dalsi" class="skryte">Další</button>

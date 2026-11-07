@@ -1,18 +1,71 @@
-/*style pro odpovedi */
+/* ===== Cela stranka ===== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 20px;
+}
+
+/* ===== Hlavni sede okno uprostred (obsahuje start, kviz i vysledek) ===== */
+.okno {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #d6d6d6;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* ===== Nadpisy ===== */
+h1 {
+    color: #000000;
+}
+
+/* ===== Schovani casti stranky (tuto tridu pridava/odebira JavaScript) ===== */
+.skryte {
+    display: none;
+}
+
+/* ===== Vsechna tlacitka (Zacit test, Dalsi, Zkusit znovu) ===== */
+button {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 12px 25px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* tlacitko pri najeti mysi */
+button:hover {
+    background-color: #6666dc;
+}
+
+/* ===== Seznam odpovedi pod otazkou ===== */
 #odpovedi {
     display: grid;
     gap: 10px;
     margin: 20px;
 }
+
+/* jedno tlacitko s odpovedi */
 .odpoved {
     background: #a6a5a5;
     color: #000000;
     border: solid;
     text-align: left;
 }
-.odpoved.vybrana { background: #7590f1; border-color: #001fb4; }
 
-/* vypis chyb na konci */
+/* odpoved, kterou hrac vybral */
+.odpoved.vybrana {
+    background: #7590f1;
+    border-color: #001fb4;
+}
+
+/* ===== Vypis chyb na konci (vyhodnoceni) ===== */
 #chyby p {
     text-align: left;
     background: #ffffff;
